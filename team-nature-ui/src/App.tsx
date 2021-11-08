@@ -14,6 +14,30 @@ import {
 } from "@chakra-ui/react";
 import { Logo } from "./Logo";
 import { Counter } from "./donations/Counter";
+import { useQuery, useSubscription } from "urql";
+
+const TotalDonationsQuery = `
+  query Query {
+    totalDonations
+    donations {
+      count
+      id
+      displayName
+    }
+}
+`;
+
+const TotalUpdatedQuery = `
+  subscription TotalUpdated {
+    totalUpdated {
+      total
+    }
+  }
+`;
+
+const handleSubscription = (previous: any, newTotal: any) => {
+  return newTotal?.totalUpdated?.total;
+};
 
 const theme = extendTheme({
   fonts: {
@@ -22,21 +46,38 @@ const theme = extendTheme({
   },
 });
 
-export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Heading>JOIN THE MOVEMENT</Heading>
-          <Text>
-            Help us remove 30 million pounds of trash by January 1st, 2022.
-          </Text>
-          <Heading as="h2" size="4xl">
-            <Counter from={0} to={1237109} />
-          </Heading>
-        </VStack>
-      </Grid>
-    </Box>
-  </ChakraProvider>
-);
+export const App = () => {
+  const [{ data, fetching, error }] = useQuery({
+    query: TotalDonationsQuery,
+  });
+
+  const [res] = useSubscription(
+    { query: TotalUpdatedQuery },
+    handleSubscription
+  );
+
+  return (
+    <ChakraProvider theme={theme}>
+      <Box textAlign="center" fontSize="xl">
+        <Grid minH="100vh" p={3}>
+          <VStack spacing={8}>
+            <Logo h="40vmin" pointerEvents="none" />
+            <Heading>JOIN THE MOVEMENT</Heading>
+            <Text>
+              Help us remove 30 million pounds of trash by January 1st, 2022.
+            </Text>
+            <Heading as="h2" size="4xl">
+              {error && <p>Oh no ... {error.message}</p>}
+
+              {fetching ? (
+                <p> Loading...</p>
+              ) : (
+                <Counter from={0} to={res.data || data.totalDonations} />
+              )}
+            </Heading>
+          </VStack>
+        </Grid>
+      </Box>
+    </ChakraProvider>
+  );
+};
