@@ -5,6 +5,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator nestgraphql {
+  provider               = "node node_modules/prisma-nestjs-graphql"
+  output                 = "../src/@generated/prisma-nestjs-graphql"
+  fields_Validator_from  = "class-validator"
+  fields_Validator_input = true
+}
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -13,7 +20,9 @@ datasource db {
 model Donation {
   id          Int      @id @default(autoincrement())
   count       Int
+  /// @Validator.MinLength(3)
   displayName String
+  /// @Validator.IsEmail()
   email       String
   createdAt   DateTime @default(now())
   mobile      String?
