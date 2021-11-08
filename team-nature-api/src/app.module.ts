@@ -13,8 +13,8 @@ import { DonationsModule } from './donations/donations.module';
       typePaths: ['./**/*.graphql'],
       resolvers: { DateTime: GraphQLISODateTime },
       subscriptions: {
-        'graphql-ws': true,
         'subscriptions-transport-ws': true,
+        'graphql-ws': true,
       },
     }),
     DonationsModule,
