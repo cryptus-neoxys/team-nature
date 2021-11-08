@@ -1,0 +1,10 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "database": "${workspaceFolder:team-nature}/team-nature-api/prisma/dev.db",
+      "name": "team_nature"
+    }
+  ]
+}
