@@ -12,6 +12,11 @@ type Donation {
   createdAt: DateTime
 }
 
+input OrderByParams {
+  field: String
+  direction: String
+}
+
 input CreateDonationInput {
   count: Int!
   displayName: String!
@@ -23,7 +28,7 @@ input CreateDonationInput {
 }
 
 type Query {
-  donations: [Donation]!
+  donations(orderBy: OrderByParams): [Donation]!
   donation(id: Int!): Donation
 }
 

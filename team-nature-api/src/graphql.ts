@@ -7,6 +7,11 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export class OrderByParams {
+    field?: Nullable<string>;
+    direction?: Nullable<string>;
+}
+
 export class CreateDonationInput {
     count: number;
     displayName: string;
@@ -29,7 +34,7 @@ export class Donation {
 }
 
 export abstract class IQuery {
-    abstract donations(): Nullable<Donation>[] | Promise<Nullable<Donation>[]>;
+    abstract donations(orderBy?: Nullable<OrderByParams>): Nullable<Donation>[] | Promise<Nullable<Donation>[]>;
 
     abstract donation(id: number): Nullable<Donation> | Promise<Nullable<Donation>>;
 }
