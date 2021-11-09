@@ -15,6 +15,7 @@ import {
 import { Logo } from "./Logo";
 import { Counter } from "./donations/Counter";
 import { useQuery, useSubscription } from "urql";
+import { LeaderBoard } from "./donations/LeaderBoard";
 
 const TotalDonationsQuery = `
   query Query {
@@ -23,7 +24,7 @@ const TotalDonationsQuery = `
       count
       id
       displayName
-    }
+  }
 }
 `;
 
@@ -75,6 +76,7 @@ export const App = () => {
                 <Counter from={0} to={res.data || data.totalDonations} />
               )}
             </Heading>
+            <LeaderBoard />
           </VStack>
         </Grid>
       </Box>
