@@ -5,7 +5,7 @@ const dateFormat = (time?: string | number | Date) => {
     return;
   }
 
-  return format(new Date(time), "Pp");
+  return format(new Date(time), "PP");
 };
 
 export default dateFormat;

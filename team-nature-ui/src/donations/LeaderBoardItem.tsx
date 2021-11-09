@@ -50,7 +50,9 @@ export const LeaderBoardItem = ({ donation }: Props) => {
                 {donation.count} Pounds
               </Badge>
             </div>
-            <Text>{formatDate(donation?.createdAt)}</Text>
+            <Text fontSize="xs" fontWeight="semibold">
+              {formatDate(donation?.createdAt)}
+            </Text>
           </Flex>
         </Flex>
       </Box>
