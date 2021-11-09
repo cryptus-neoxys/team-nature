@@ -1,4 +1,5 @@
-import { Box, Heading, Text, VStack } from "@chakra-ui/layout";
+import { Box, Heading, Stack, Text, VStack } from "@chakra-ui/layout";
+import { Radio, RadioGroup } from "@chakra-ui/radio";
 import React, { useState } from "react";
 import { useQuery } from "urql";
 
@@ -38,6 +39,12 @@ export const LeaderBoard = () => {
           LeaderBoard
         </Heading>
 
+        <RadioGroup onChange={setField} value={field}>
+          <Stack direction="row">
+            <Radio value="createdAt">Most Recent</Radio>
+            <Radio value="count">Most Trees</Radio>
+          </Stack>
+        </RadioGroup>
         {error && <Text>Oh no ... {error.message}</Text>}
         {fetching ? (
           <Text>Loading ... </Text>
